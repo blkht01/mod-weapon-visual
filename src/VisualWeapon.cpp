@@ -142,7 +142,14 @@ public:
 
     bool OnGossipHello(Player* player, Creature* creature) override
     {
-        GetMainMenu(player, creature);
+        if (player->GetPlayerSetting("store", 8).value == 1) // Check if player has premium access
+        {
+            GetMainMenu(player, creature);
+        }
+        else
+        {
+            ChatHandler(player->GetSession()).PSendSysMessage("You do not have access to this service. You can purchase access in the store.");
+        }
         return true;
     }
 
